@@ -1,5 +1,5 @@
 # Description
-UM34C is a small NodeJS tool to read out and control the UM34C USB analyzer via Bluetooth. Get the UM34C device here: [Banggood](https://www.banggood.com/RUIDENG-UM34-UM34C-For-APP-USB-3_0-Type-C-DC-Voltmeter-Ammeter-Voltage-Current-Meter-Tester-p-1297185.html)
+UM34C is a small NodeJS tool to read out and control the UM34C (an probably also the UM24C / UM25C, untested!) USB analyzer via Bluetooth. Get the UM34C device here: [Banggood](https://www.banggood.com/RUIDENG-UM34-UM34C-For-APP-USB-3_0-Type-C-DC-Voltmeter-Ammeter-Voltage-Current-Meter-Tester-p-1297185.html)
 
 ![](/um34c_small.jpg?raw=true)
 
