@@ -50,8 +50,15 @@ var convertData = function(buffer) {
 	var hex = buffer.toString("hex");
 	// Charging modes (not all are known yet)
 	var modes = {
+		0: "Unknown",
+		1: "QC2.0",
+		2: "QC3.0",
+		3: "APP2.4A",
+		4: "APP2.1A",
 		5: "APP1.0A",
-		7: "DCP1.5A"
+		6: "APP0.5A",
+		7: "DCP1.5A",
+		8: "SAMSUNG"
 	}
 	/* Data from device
 	 *      4    8    12   16   20   24   28   32   36   40   44   48   52   56   60
