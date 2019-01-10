@@ -159,6 +159,6 @@ The following data can be received from the device:
 ```
 
 # License
-Copyright (c) 2018 Sebastian Hammerl
+Copyright (c) 2019 Sebastian Hammerl
 
 Licensed under the GPLV3 License
