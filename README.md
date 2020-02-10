@@ -7,6 +7,10 @@ UM34C is a small NodeJS tool to read out and control the UM34C (an probably also
 Just run: `npm install`
 
 Make sure that bluetooth dev libs are installed. Currently this tool is only tested on Linux.
+
+```
+On Ubuntu run: apt-get install -y libbluetooth-dev
+```
 # Usage
 When started without command line options the tool will search for a device named "UM34C" and connect to it. The following command line arguments are available:
 ```
