@@ -10,6 +10,7 @@ Make sure that bluetooth dev libs are installed. Currently this tool is only tes
 
 ```
 On Ubuntu run: apt-get install -y libbluetooth-dev
+On Opensuse run: zypper install bluez-devel
 ```
 # Usage
 When started without command line options the tool will search for a device named "UM34C" and connect to it. The following command line arguments are available:

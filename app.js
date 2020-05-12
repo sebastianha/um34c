@@ -7,11 +7,11 @@ stdin.setEncoding("utf8");
 
 var program = require("commander");
 program
-	.version("1.0.1")
+	.version("1.1.0")
 	.option("-a, --address [AB:90:78:56:36:95]", "Connect to Bluetooth address")
 	.option("-i, --interval [ms]",               "Data query interval (default 1000ms, min 500ms)")
-	.option("-p, --print",                       "Print data on stdout")
-	.option("-c, --csv",                         "Print data as CSV")
+	.option("-p, --print",                       "Print data on stdout as JSON")
+	.option("-c, --csv",                         "Print data on stdout as CSV")
 	.option("-r, --remote",                      "Show remote control help")
 	.option("-s, --server [port]",               "Start HTTP / WebSockets server")
 	.parse(process.argv);
@@ -199,7 +199,7 @@ var connect = function(address, name) {
 			if(err) return console.error(err);
 			if( !btSilent) console.error("Connection to device established")
 			var dataCounter = 0;
-			var dataBuffer = new Buffer(130);
+			var dataBuffer = Buffer.alloc(130);
 			connection.on("data", function(buffer) {
 				buffer.copy(dataBuffer, dataCounter);
 				dataCounter += buffer.length;
@@ -217,7 +217,7 @@ var connect = function(address, name) {
 				interval = 500;
 			}
 			setInterval(function() {
-				connection.write(new Buffer("f0", "hex"), function() {});
+				connection.write(Buffer.from("f0", "hex"), function() {});
 			}, interval);
 
 			// Debug test all codes
@@ -228,7 +228,7 @@ var connect = function(address, name) {
 					hexToSend = "0" + hexToSend;
 				}
 				console.error(hexToSend);
-				connection.write(new Buffer(hexToSend, "hex"), function() {});
+				connection.write(Buffer.from(hexToSend, "hex"), function() {});
 				toSend++;
 			}, 500);*/
 
@@ -250,16 +250,16 @@ var connect = function(address, name) {
 						process.exit();
 						break;
 					case "\u001B\u005B\u0043": // right
-						connection.write(new Buffer("f1", "hex"), function() {});
+						connection.write(Buffer.from("f1", "hex"), function() {});
 						break;
 					case "\u001B\u005B\u0044": // left
-						connection.write(new Buffer("f3", "hex"), function() {});
+						connection.write(Buffer.from("f3", "hex"), function() {});
 						break;
 					case "r":
-						connection.write(new Buffer("f2", "hex"), function() {});
+						connection.write(Buffer.from("f2", "hex"), function() {});
 						break;
 					case "C":
-						connection.write(new Buffer("f4", "hex"), function() {});
+						connection.write(Buffer.from("f4", "hex"), function() {});
 						break;
 					case "g":
 						var g = data.group;
@@ -267,7 +267,7 @@ var connect = function(address, name) {
 						if(g>9) {
 							g=0;
 						}
-						connection.write(new Buffer("a" + g, "hex"), function() {});
+						connection.write(Buffer.from("a" + g, "hex"), function() {});
 						break;
 					case "b":
 						var b = data.settings.brightness;
@@ -275,7 +275,7 @@ var connect = function(address, name) {
 						if(b>5) {
 							b=0;
 						}
-						connection.write(new Buffer("d" + b, "hex"), function() {});
+						connection.write(Buffer.from("d" + b, "hex"), function() {});
 						break;
 				}
 			});
@@ -292,7 +292,7 @@ if(program.address) {
 			console.error("Found UM34C device with address: " + address);
 			connect(address, name);
 		}
-	}).inquire();
+	}).scan();
 }
 
 
