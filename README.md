@@ -7,6 +7,11 @@ UM34C is a small NodeJS tool to read out and control the UM34C (an probably also
 Just run: `npm install`
 
 Make sure that bluetooth dev libs are installed. Currently this tool is only tested on Linux.
+
+```
+On Ubuntu run: apt-get install -y libbluetooth-dev
+On Opensuse run: zypper install bluez-devel
+```
 # Usage
 When started without command line options the tool will search for a device named "UM34C" and connect to it. The following command line arguments are available:
 ```
@@ -20,6 +25,7 @@ When started without command line options the tool will search for a device name
     -a, --address [AB:90:78:56:36:95]  Connect to Bluetooth address
     -i, --interval [ms]                Data query interval (default 1000ms, min 500ms)
     -p, --print                        Print data on stdout
+    -c, --csv                          Print data as CSV
     -r, --remote                       Show remote control help
     -s, --server [port]                Start HTTP / WebSockets server
     -h, --help                         output usage information
@@ -41,6 +47,30 @@ Pretty print:
 Show voltage only:
 
 `./app.js -a AB:90:78:56:36:95 -p | while read D; do echo $D | jq .voltage; done`
+
+## CSV
+Use this to output CSV style data on stdout. This will also print the headers as well.
+
+Output to CSV:
+`./app.js -a AB:90:78:56:36:95 -c > sampleData.csv`
+
+Sample Data:
+
+```
+timestamp,voltage,current,power,temperature_celsius,temperature_fahrenheit,dataline_plus,dataline_minus,resistence,mode_name,mode_number,unknown0
+1589300924385,5.19,0,0,21,70,0,0,9999.9,DCP1.5A,7,27395
+1589300925378,5.19,0,0,21,70,0,0,9999.9,DCP1.5A,7,27395
+1589300926367,5.19,0,0,21,70,0,0,9999.9,DCP1.5A,7,27395
+1589300927352,5.19,0,0,21,70,0,0,9999.9,DCP1.5A,7,27395
+1589300928361,5.19,0,0,21,70,0.01,0,9999.9,DCP1.5A,7,27394
+1589300929355,5.19,0,0,21,70,0.01,0,9999.9,DCP1.5A,7,27394
+1589300930340,5.19,0,0,21,70,0.01,0,9999.9,DCP1.5A,7,27394
+1589300931343,5.19,0,0,21,70,0.01,0,9999.9,DCP1.5A,7,27394
+1589300932338,5.19,0,0,21,70,0,0,9999.9,DCP1.5A,7,27395
+1589300933327,5.19,0,0,21,70,0,0,9999.9,DCP1.5A,7,27395
+1589300934486,5.19,0,0,21,70,0.01,0,9999.9,DCP1.5A,7,27394
+1589300935322,5.19,0,0,21,70,0.01,0,9999.9,DCP1.5A,7,27394
+```
 
 ## Remote
 When running commands can be send to the device to control it:
@@ -159,6 +189,6 @@ The following data can be received from the device:
 ```
 
 # License
-Copyright (c) 2018 Sebastian Hammerl
+Copyright (c) 2019 Sebastian Hammerl
 
 Licensed under the GPLV3 License

@@ -1,6 +1,6 @@
 {
   "name": "um34c",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A small NodeJS tool to read out and control the UM34C USB analyzer via Bluetooth",
   "main": "app.js",
   "scripts": {
@@ -9,10 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bluetooth-serial-port": "^2.1.7",
-    "commander": "^2.16.0",
-    "express": "^4.16.3",
-    "node-bluetooth": "^1.2.2",
-    "socket.io": "^2.1.1"
+    "bluetooth-serial-port": "^2.2.7",
+    "commander": "^5.1.0",
+    "express": "^4.17.1",
+    "node-bluetooth": "^1.2.6",
+    "socket.io": "^2.3.0"
   }
 }
