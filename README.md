@@ -24,8 +24,8 @@ When started without command line options the tool will search for a device name
     -V, --version                      output the version number
     -a, --address [AB:90:78:56:36:95]  Connect to Bluetooth address
     -i, --interval [ms]                Data query interval (default 1000ms, min 500ms)
-    -p, --print                        Print data on stdout
-    -c, --csv                          Print data as CSV
+    -p, --print                        Print data on stdout as JSON
+    -c, --csv                          Print data on stdout as CSV
     -r, --remote                       Show remote control help
     -s, --server [port]                Start HTTP / WebSockets server
     -h, --help                         output usage information
