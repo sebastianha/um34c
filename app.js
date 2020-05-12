@@ -7,10 +7,11 @@ stdin.setEncoding("utf8");
 
 var program = require("commander");
 program
-	.version("1.0.0")
+	.version("1.0.1")
 	.option("-a, --address [AB:90:78:56:36:95]", "Connect to Bluetooth address")
 	.option("-i, --interval [ms]",               "Data query interval (default 1000ms, min 500ms)")
 	.option("-p, --print",                       "Print data on stdout")
+	.option("-c, --csv",                         "Print data as CSV")
 	.option("-r, --remote",                      "Show remote control help")
 	.option("-s, --server [port]",               "Start HTTP / WebSockets server")
 	.parse(process.argv);
@@ -39,6 +40,13 @@ if(program.server) {
 	} else {
 		server.listen(parseInt(program.server));
 	}
+}
+
+var printHeaders = false;
+var btSilent = false;
+if(program.csv){
+    printHeaders = true;
+    btSilent = true;
 }
 
 var bluetooth = require("node-bluetooth");
@@ -146,6 +154,31 @@ var convertData = function(buffer) {
 		console.log(JSON.stringify(data));
 	}
 
+	if(program.csv) {
+		csv_labels = [ "timestamp", "voltage", "current",
+				"power", "temperature_celsius", "temperature_fahrenheit",
+				"dataline_plus", "dataline_minus", "resistence",
+				"mode_name", "mode_number", "unknown0" ]
+		if(printHeaders) {
+    			console.log(...csv_labels);
+    			printHeaders = false;
+		}
+	
+    		line = []
+    		csv_labels.forEach( key => {
+    			if(data.hasOwnProperty( key )) {
+        			line.push( data[key] )
+        		// index with _ as layers
+    			} else if ( key.includes("_") ) {
+				line.push(key.split("_").reduce( (o,k) => o[k], data))
+    			}
+    		})
+
+    		//TODO: add custom seperator
+    		console.log(...line);
+    		
+	}
+
 	if(program.server) {
 		io.sockets.emit("data", data);
 	}
@@ -165,10 +198,10 @@ var convertData = function(buffer) {
 
 var connect = function(address, name) {
 	device.findSerialPortChannel(address, function(channel) {
-		console.error("Found RFCOMM channel for serial port on %s: ", name, channel);
+		if( !btSilent ) console.error("Found RFCOMM channel for serial port on %s: ", name, channel);
 		bluetooth.connect(address, channel, function(err, connection) {
 			if(err) return console.error(err);
-			console.error("Connection to device established")
+			if( !btSilent) console.error("Connection to device established")
 			var dataCounter = 0;
 			var dataBuffer = new Buffer(130);
 			connection.on("data", function(buffer) {
