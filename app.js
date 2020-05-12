@@ -160,10 +160,9 @@ var convertData = function(buffer) {
 				"dataline_plus", "dataline_minus", "resistence",
 				"mode_name", "mode_number", "unknown0" ]
 		if(printHeaders) {
-    			console.log(...csv_labels);
+			console.log(csv_labels.reduce( (s,l) => (s + l + ','),"").slice(0,-1))
     			printHeaders = false;
 		}
-	
     		line = []
     		csv_labels.forEach( key => {
     			if(data.hasOwnProperty( key )) {
@@ -173,10 +172,7 @@ var convertData = function(buffer) {
 				line.push(key.split("_").reduce( (o,k) => o[k], data))
     			}
     		})
-
-    		//TODO: add custom seperator
-    		console.log(...line);
-    		
+    		console.log(line.reduce( (s,v) => (s + v + ','), "" ).slice(0,-1));  		
 	}
 
 	if(program.server) {
