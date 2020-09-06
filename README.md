@@ -192,3 +192,5 @@ The following data can be received from the device:
 Copyright (c) 2019 Sebastian Hammerl
 
 Licensed under the GPLV3 License
+
+Manual from https://www.mediafire.com/folder/5c877rc21tp1p/UM34
